@@ -1,0 +1,21 @@
+<%- include('../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'top';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = [];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../parts/_head'); %>
+
+<ul style="margin-top: 100px; text-align: center;">
+  <li><a href="./animated-landscape/">animated-landscape</a></li>
+</ul>
+
+<%- include('../parts/_foot'); %>

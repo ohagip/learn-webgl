@@ -1,0 +1,108 @@
+// ==========================================================================
+// Foundation
+// ==========================================================================
+
+@import 'foundation/_config';
+@import 'foundation/_mixin';
+@import 'foundation/_reset';
+//@import 'foundation/_font';
+@import 'foundation/_base';
+//@import 'foundation/_animation';
+
+// ==========================================================================
+// Libs （ライブラリはnpmかlibsフォルダからimportする）
+// ==========================================================================
+
+//@import "../../node_modules/slick-carousel/slick/slick";
+//@import 'libs/_slick';
+
+// ==========================================================================
+// Layout
+// ==========================================================================
+
+@import 'layout/_wrap';
+@import 'layout/_main';
+
+// ==========================================================================
+// Object
+// ==========================================================================
+
+// -----------------------------------------------------------------
+// Component
+// -----------------------------------------------------------------
+
+.c-canvas {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.c-note {
+  position: absolute;
+  z-index: 10;
+  left: 24px;
+  bottom: 24px;
+}
+
+.c-note:before {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  opacity: 1;
+  transition: opacity .2s linear;
+}
+
+.c-note:hover:before {
+  opacity: 0;
+}
+
+.c-note a {
+  color: #fff;
+}
+
+.c-note_body {
+  padding: 12px;
+  color: #fff;
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity .2s linear;
+}
+
+.c-note:hover .c-note_body {
+  opacity: 1;
+}
+
+// -----------------------------------------------------------------
+// Project
+// -----------------------------------------------------------------
+
+// -----------------------------------------------------------------
+// Utility
+// -----------------------------------------------------------------
+
+@import 'object/utility/_clearfix';
+@import 'object/utility/_margin';
+@import 'object/utility/_padding';
+@import 'object/utility/_only';
+
+.u-of-h {
+  overflow: hidden;
+}
+
+// ==========================================================================
+// Page
+// ==========================================================================
+
+@import 'pages/_top';
