@@ -1,0 +1,25 @@
+<%- include('../../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'dissolve';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = ['u-of-h'];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '/index.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../../parts/_head'); %>
+
+<canvas id="canvas" class="c-canvas"></canvas>
+<!--<div class="c-note">-->
+  <!--<div class="c-note_body">-->
+    <!--<a href="https://tympanus.net/codrops/2018/12/20/interactive-animated-landscape/" target="_blank">参考サイト</a><br>-->
+    <!--vertex shaderで頂点をnoiseで移動させる-->
+  <!--</div>-->
+<!--</div>-->
+
+<%- include('../../parts/_foot'); %>

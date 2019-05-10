@@ -24,7 +24,8 @@
     "YT": true,
     "LineIt": true,
     "IScroll": true,
-    "THREE": true
+    "THREE": true,
+    "dat": true
   },
   "rules": {
     "no-console": 0, // consoleを許可しない off
