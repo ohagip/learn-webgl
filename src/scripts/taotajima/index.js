@@ -8,39 +8,13 @@ import fragmentShader from './shader.frag';
   const controller = {};
   const guiParams = {
     step: 0,
-    duration: 3,
-    noiseX: 5,
-    noiseY: 5,
-    noiseZ: 1,
-    edgeWidth: 0.05,
-    animation: true,
   };
 
   controller.step = gui
     .add(guiParams, 'step', 0, 1, 0.001)
     .onChange((value) => {
-      material.uniforms.uStep.value = value;
+      material.uniforms.uProgress.value = value;
     });
-  gui.add(guiParams, 'duration', 0.5, 10);
-  gui.add(guiParams, 'noiseX', 0, 100).onChange((value) => {
-    material.uniforms.uNoiseX.value = value;
-  });
-  gui.add(guiParams, 'noiseY', 0, 100).onChange((value) => {
-    material.uniforms.uNoiseY.value = value;
-  });
-  gui.add(guiParams, 'noiseZ', 0, 100).onChange((value) => {
-    material.uniforms.uNoiseZ.value = value;
-  });
-  gui.add(guiParams, 'edgeWidth', 0, 0.1).onChange((value) => {
-    material.uniforms.uEdgeWidth.value = value;
-  });
-  gui.add(guiParams, 'animation').onChange((value) => {
-    if (value === true) {
-      startEffect();
-    } else {
-      stopEffect();
-    }
-  });
 
   // texture
   const texturePath = config.imagesPath + 'common/sample/';
@@ -70,21 +44,6 @@ import fragmentShader from './shader.frag';
     );
   });
 
-  let textureIdx = 0;
-  const textureMax = textures.length - 1;
-  function changeTexture() {
-    textureIdx += 1;
-    if (textureIdx > textureMax) {
-      textureIdx = 0;
-    }
-    let nextIdx = textureIdx + 1;
-    if (nextIdx > textureMax) {
-      nextIdx = 0;
-    }
-    material.uniforms.uTexturePrev.value = textures[textureIdx].val;
-    material.uniforms.uTextureNext.value = textures[nextIdx].val;
-  }
-
   // scene
   const scene = new THREE.Scene();
 
@@ -105,11 +64,7 @@ import fragmentShader from './shader.frag';
       uTexResolution: { type: 'v2', value: textureResolution },
       uTexturePrev: { type: 't', value: undefined },
       uTextureNext: { type: 't', value: undefined },
-      uStep: { type: 'f', value: guiParams.step },
-      uNoiseX: { type: 'f', value: guiParams.noiseX },
-      uNoiseY: { type: 'f', value: guiParams.noiseY },
-      uNoiseZ: { type: 'f', value: guiParams.noiseZ },
-      uEdgeWidth: { type: 'f', value: guiParams.edgeWidth },
+      uProgress: { type: 'f', value: guiParams.step },
     },
     vertexShader: vertexShader,
     fragmentShader: fragmentShader,
@@ -131,49 +86,6 @@ import fragmentShader from './shader.frag';
     material.uniforms.uResolution.value.y = height;
   }
 
-  let tween = null;
-  let delayTween = null;
-  function startEffect() {
-    if (delayTween !== null) {
-      delayTween.play();
-      return;
-    }
-
-    if (tween !== null) {
-      tween.play();
-      return;
-    }
-
-    tween = TweenMax.to(guiParams, guiParams.duration, {
-      step: 1,
-      onUpdate: () => {
-        controller.step.setValue(guiParams.step);
-      },
-      ease: Power0.easeNone,
-      onComplete: () => {
-        delayTween = TweenMax.delayedCall(1, () => {
-          tween = null;
-          delayTween = null;
-          guiParams.step = 0;
-          controller.step.setValue(guiParams.step);
-          changeTexture();
-          startEffect();
-        });
-      },
-    });
-  }
-
-  function stopEffect() {
-    if (delayTween !== null) {
-      delayTween.pause();
-      return;
-    }
-
-    if (tween !== null) {
-      tween.pause();
-    }
-  }
-
   window.addEventListener('resize', resize);
   resize();
 
@@ -182,9 +94,6 @@ import fragmentShader from './shader.frag';
       material.uniforms.uTexturePrev.value = textures[0].val;
       material.uniforms.uTextureNext.value = textures[1].val;
       render();
-      if (guiParams.animation === true) {
-        startEffect();
-      }
     },
     (err) => {
       console.log(err);

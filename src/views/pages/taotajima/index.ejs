@@ -1,0 +1,25 @@
+<%- include('../../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'taotajima';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = ['u-of-h'];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '/index.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../../parts/_head'); %>
+
+<canvas id="canvas" class="c-canvas"></canvas>
+<div class="c-note">
+<div class="c-note_body">
+<a href="https://medium.com/@akella/taotajima-jp-webgl-deconstruction-af4946e8e8ed" target="_blank">参考サイト</a><br>
+<a href="http://taotajima.jp/" target="_blank">参考サイト</a><br>
+</div>
+</div>
+
+<%- include('../../parts/_foot'); %>
