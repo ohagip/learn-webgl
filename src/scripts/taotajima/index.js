@@ -56,10 +56,14 @@ import fragmentShader from './shader.frag';
     antialias: true,
   });
 
+  // clock
+  const clock = new THREE.Clock();
+
   // mesh
   const geometry = new THREE.PlaneGeometry(2, 2, 1, 1);
   const material = new THREE.ShaderMaterial({
     uniforms: {
+      uTime: { type: 'f', value: 0 },
       uResolution: { type: 'v2', value: new THREE.Vector2() },
       uTexResolution: { type: 'v2', value: textureResolution },
       uTexturePrev: { type: 't', value: undefined },
@@ -74,6 +78,7 @@ import fragmentShader from './shader.frag';
 
   function render() {
     requestAnimationFrame(render);
+    material.uniforms.uTime.value = clock.getElapsedTime();
     renderer.render(scene, camera);
   }
 
