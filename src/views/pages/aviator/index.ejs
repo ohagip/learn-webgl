@@ -1,0 +1,34 @@
+<%- include('../../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'aviator';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = ['u-of-h'];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '/index.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../../parts/_head'); %>
+<style>
+  .world {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(#e4e0ba, #f7d9aa);
+  }
+</style>
+<div class="world">
+    <canvas id="canvas" class="c-canvas"></canvas>
+</div>
+<!--<div class="c-note">-->
+<!--<div class="c-note_body">-->
+<!--<a href="https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/" target="_blank">参考サイト</a><br>-->
+<!--</div>-->
+<!--</div>-->
+
+<%- include('../../parts/_foot'); %>
