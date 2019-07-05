@@ -1,0 +1,75 @@
+<%- include('../../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'aviator-game';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = ['u-of-h'];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '/index.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../../parts/_head'); %>
+<style>
+  .world {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(#e4e0ba, #f7d9aa);
+  }
+
+  .status {
+    position: absolute;
+    z-index: 2;
+    left: 15px;
+    top: 15px;
+  }
+
+  #energyBarWrap {
+    overflow: hidden;
+    position: relative;
+    height: 20px;
+    width: 200px;
+  }
+
+  #energyBar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+  }
+</style>
+<div class="world">
+  <canvas id="canvas" class="c-canvas"></canvas>
+</div>
+<div class="status">
+  <div id="distValueWrap">
+    <span>きょり</span>
+    <span id="distValue"></span>
+  </div>
+  <div id="energyBarWrap">
+    <div id="energyBar"></div>
+  </div>
+  <div class="levelValueWrap">
+    <span>れべる</span>
+    <span id="levelValue"></span>
+  </div>
+  <div class="replayMessageWrap">
+    <span id="replayMessage">もういちど</span>
+  </div>
+  <div id="levelCircleStroke"></div>
+</div>
+<!--<div class="c-note">-->
+<!--<div class="c-note_body">-->
+<!--<a href="https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/" target="_blank">参考サイト</a><br>-->
+<!--</div>-->
+<!--</div>-->
+
+<%- include('../../parts/_foot'); %>

@@ -1,9 +1,16 @@
+import game from './_game';
 import Colors from './_Colors';
 
 class Sea {
   constructor() {
     // 円柱（上半径、下半径、高さ、円のセグメント、高さのセグメント）
-    const geom = new THREE.CylinderGeometry(600, 600, 800, 40, 10);
+    const geom = new THREE.CylinderGeometry(
+      game.v.seaRadius,
+      game.v.seaRadius,
+      game.v.seaLength,
+      40,
+      10
+    );
 
     // x軸で回転させる
     // applyMatrix(Matrix4) -> マトリックス変換を適用
@@ -24,8 +31,8 @@ class Sea {
         x: v.x,
         z: v.z,
         ang: Math.random() * Math.PI * 2,
-        amp: 5 + Math.random() * 15, // 距離
-        speed: 0.016 + Math.random() * 0.032, // 0.016 and 0.048
+        amp: game.v.wavesMinAmp + Math.random() * (game.v.wavesMaxAmp - game.v.wavesMinAmp), // 距離
+        speed: game.v.wavesMinSpeed + Math.random() * (game.v.wavesMaxSpeed - game.v.wavesMinSpeed),
       });
     }
 
@@ -39,6 +46,7 @@ class Sea {
     });
 
     this.mesh = new THREE.Mesh(geom, mat);
+    this.mesh.name = 'waves';
     this.mesh.receiveShadow = true; // 影を有効にする
   }
 
@@ -57,8 +65,6 @@ class Sea {
 
     // three.jsではジオメトリをチャックするため、変更有効にするための設定
     this.mesh.geometry.verticesNeedUpdate = true;
-
-    this.mesh.rotation.z += 0.005;
   }
 }
 
