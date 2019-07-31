@@ -46,6 +46,7 @@ const paths = {
       `${ROOT}/node_modules/gsap/src/minified/TweenMax.min.js`,
       `${ROOT}/node_modules/three/build/three.min.js`,
       `${ROOT}/node_modules/dat.gui/build/dat.gui.min.js`,
+      `${ROOT}/node_modules/tweakpane/dist/tweakpane.min.js`,
       // `${ROOT}/node_modules/scrollmagic/scrollmagic/minified/ScrollMagic.min.js`,
       // `${ROOT}/node_modules/scrollmagic/scrollmagic/minified/plugins/animation.gsap.min.js`,
       // `${ROOT}/node_modules/scrollmagic/scrollmagic/minified/plugins/debug.addIndicators.min.js`,

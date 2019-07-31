@@ -79,6 +79,7 @@
     "scrollmagic": "^2.0.5",
     "slick-carousel": "^1.8.1",
     "three": "^0.104.0",
+    "tweakpane": "^1.0.5",
     "uglifyjs-webpack-plugin": "^2.1.1",
     "vinyl-named": "^1.1.0",
     "webpack": "^4.28.1",

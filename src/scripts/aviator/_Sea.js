@@ -58,7 +58,7 @@ class Sea {
     // three.jsではジオメトリをチャックするため、変更有効にするための設定
     this.mesh.geometry.verticesNeedUpdate = true;
 
-    this.mesh.rotation.z += .005;
+    this.mesh.rotation.z += 0.005;
   }
 }
 
