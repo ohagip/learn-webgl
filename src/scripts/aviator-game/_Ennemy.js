@@ -46,8 +46,12 @@ class EnnemiesHolder {
 
       // ギリギリの位置から生成
       ennemy.angle = -(i * 0.1);
-      ennemy.distance = game.v.seaRadius + game.v.planeDefaultHeight + (-1 + Math.random() * 2) * (game.v.planeAmpHeight - 20);
-      ennemy.mesh.position.y = -game.v.seaRadius + Math.sin(ennemy.angle) * ennemy.distance;
+      ennemy.distance =
+        game.v.seaRadius +
+        game.v.planeDefaultHeight +
+        (-1 + Math.random() * 2) * (game.v.planeAmpHeight - 20);
+      ennemy.mesh.position.y =
+        -game.v.seaRadius + Math.sin(ennemy.angle) * ennemy.distance;
       ennemy.mesh.position.x = Math.cos(ennemy.angle) * ennemy.distance;
 
       this.mesh.add(ennemy.mesh);
@@ -64,21 +68,29 @@ class EnnemiesHolder {
         ennemy.angle -= Math.PI * 2;
       }
 
-      ennemy.mesh.position.y = -game.v.seaRadius + Math.sin(ennemy.angle) * ennemy.distance;
+      ennemy.mesh.position.y =
+        -game.v.seaRadius + Math.sin(ennemy.angle) * ennemy.distance;
       ennemy.mesh.position.x = Math.cos(ennemy.angle) * ennemy.distance;
       ennemy.mesh.rotation.z += Math.random() * 0.1;
       ennemy.mesh.rotation.y += Math.random() * 0.1;
 
       // 飛行機と敵とのあたり判定
-      const diffPos = this.airplane.mesh.position.clone().sub(ennemy.mesh.position.clone());
+      const diffPos = this.airplane.mesh.position
+        .clone()
+        .sub(ennemy.mesh.position.clone());
       const d = diffPos.length();
       if (d < game.v.ennemyDistanceTolerance) {
-        this.particles.spawnParticles(ennemy.mesh.position.clone(), 15, Colors.red, 3);
+        this.particles.spawnParticles(
+          ennemy.mesh.position.clone(),
+          15,
+          Colors.red,
+          3
+        );
 
         game.ennemiesPool.unshift(this.ennemiesInUse.splice(i, 1)[0]);
         this.mesh.remove(ennemy.mesh);
-        game.v.planeCollisionSpeedX = 100 * diffPos.x / d;
-        game.v.planeCollisionSpeedY = 100 * diffPos.y / d;
+        game.v.planeCollisionSpeedX = (100 * diffPos.x) / d;
+        game.v.planeCollisionSpeedY = (100 * diffPos.y) / d;
         this.ambientLight.intensity = 2; // 明度
 
         game.removeEnergy();

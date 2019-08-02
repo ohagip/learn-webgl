@@ -36,7 +36,7 @@ class Particle {
           this.mesh.scale.set(1, 1, 1);
           game.particlesPool.unshift(this);
         }
-      }
+      },
     });
   }
 }
@@ -52,7 +52,7 @@ class ParticlesHolder {
 
   spawnParticles(pos, density, color, scale) {
     const nParticles = density;
-    for (let i = 0; i < nParticles; i++){
+    for (let i = 0; i < nParticles; i++) {
       let particle;
       if (game.particlesPool.length) {
         particle = game.particlesPool.pop();

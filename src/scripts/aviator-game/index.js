@@ -9,7 +9,6 @@ import CoinHolder from './_Coin';
 
 console.log('game', game);
 
-
 let scene;
 let camera;
 let fieldOfView;
@@ -40,7 +39,6 @@ const energyBarElm = document.getElementById('energyBar');
 const replayMessageElm = document.getElementById('replayMessage');
 const fieldLevelElm = document.getElementById('levelValue');
 const levelCircleElm = document.getElementById('levelCircleStroke');
-
 
 function createScene() {
   HEIGHT = window.innerHeight;
@@ -138,13 +136,27 @@ function createSky() {
 }
 
 function updatePlane() {
-  game.v.planeSpeed = normalize(mousePos.x, -.5, .5,
-    game.v.planeMinSpeed, game.v.planeMaxSpeed);
-  let targetY = normalize(mousePos.y, -0.75, 0.75,
+  game.v.planeSpeed = normalize(
+    mousePos.x,
+    -0.5,
+    0.5,
+    game.v.planeMinSpeed,
+    game.v.planeMaxSpeed
+  );
+  let targetY = normalize(
+    mousePos.y,
+    -0.75,
+    0.75,
     game.v.planeDefaultHeight - game.v.planeAmpHeight,
-    game.v.planeDefaultHeight + game.v.planeAmpHeight);
-  let targetX = normalize(mousePos.x, -1, 1,
-    -game.v.planeAmpWidth * 0.7, -game.v.planeAmpWidth);
+    game.v.planeDefaultHeight + game.v.planeAmpHeight
+  );
+  let targetX = normalize(
+    mousePos.x,
+    -1,
+    1,
+    -game.v.planeAmpWidth * 0.7,
+    -game.v.planeAmpWidth
+  );
 
   game.v.planeCollisionDisplacementX += game.v.planeCollisionDisplacementX;
   targetX += game.v.planeCollisionDisplacementX;
@@ -152,20 +164,39 @@ function updatePlane() {
   game.v.planeCollisionDisplacementY += game.v.planeCollisionDisplacementY;
   targetY += game.v.planeCollisionDisplacementY;
 
-  airplane.mesh.position.y += (targetY - airplane.mesh.position.y) * game.deltaTime * game.v.planeMoveSensivity;
-  airplane.mesh.position.x += (targetX - airplane.mesh.position.x) * game.deltaTime * game.v.planeMoveSensivity;
+  airplane.mesh.position.y +=
+    (targetY - airplane.mesh.position.y) *
+    game.deltaTime *
+    game.v.planeMoveSensivity;
+  airplane.mesh.position.x +=
+    (targetX - airplane.mesh.position.x) *
+    game.deltaTime *
+    game.v.planeMoveSensivity;
 
-  airplane.mesh.rotation.z = (targetY - airplane.mesh.position.y) * game.deltaTime * game.v.planeRotXSensivity;
-  airplane.mesh.rotation.x = (airplane.mesh.position.y - targetY) * game.deltaTime * game.v.planeRotZSensivity;
+  airplane.mesh.rotation.z =
+    (targetY - airplane.mesh.position.y) *
+    game.deltaTime *
+    game.v.planeRotXSensivity;
+  airplane.mesh.rotation.x =
+    (airplane.mesh.position.y - targetY) *
+    game.deltaTime *
+    game.v.planeRotZSensivity;
 
   camera.for = normalize(mousePos.x, -1, 1, 40, 80);
   camera.updateProjectionMatrix();
-  camera.position.y += (airplane.mesh.position.y - camera.position.y) * game.deltaTime * game.v.cameraSensivity;
+  camera.position.y +=
+    (airplane.mesh.position.y - camera.position.y) *
+    game.deltaTime *
+    game.v.cameraSensivity;
 
-  game.v.planeCollisionSpeedX += (0 - game.v.planeCollisionSpeedX)* game.deltaTime * 0.03;
-  game.v.planeCollisionDisplacementX += (0 - game.v.planeCollisionDisplacementX)* game.deltaTime * 0.01;
-  game.v.planeCollisionSpeedY += (0 - game.v.planeCollisionSpeedY)* game.deltaTime * 0.03;
-  game.v.planeCollisionDisplacementY += (0 - game.v.planeCollisionDisplacementY)* game.deltaTime * 0.01;
+  game.v.planeCollisionSpeedX +=
+    (0 - game.v.planeCollisionSpeedX) * game.deltaTime * 0.03;
+  game.v.planeCollisionDisplacementX +=
+    (0 - game.v.planeCollisionDisplacementX) * game.deltaTime * 0.01;
+  game.v.planeCollisionSpeedY +=
+    (0 - game.v.planeCollisionSpeedY) * game.deltaTime * 0.03;
+  game.v.planeCollisionDisplacementY +=
+    (0 - game.v.planeCollisionDisplacementY) * game.deltaTime * 0.01;
 
   airplane.pilot.updateHairs();
 }
@@ -193,8 +224,9 @@ function createParticles() {
 function updateEnergy() {
   game.v.energy -= game.v.speed * game.deltaTime * game.v.ratioSpeedEnergy;
   game.v.energy = Math.max(0, game.v.energy);
-  energyBarElm.style.right = (100 - game.v.energy) + '%';
-  energyBarElm.style.backgroundColor = (game.v.energy < 50) ? '#f25346' : '#68c3c0';
+  energyBarElm.style.right = 100 - game.v.energy + '%';
+  energyBarElm.style.backgroundColor =
+    game.v.energy < 50 ? '#f25346' : '#68c3c0';
   if (game.v.energy < 30) {
     energyBarElm.style.animationName = 'blinking';
   } else {
@@ -210,10 +242,13 @@ function updateEnergy() {
 function updateDistance() {
   game.v.distance += game.v.speed * game.deltaTime * game.v.ratioSpeedDistance;
   fieldDistanceElm.innerHTML = Math.floor(game.v.distance);
-  const d = 502 * (1 - (game.v.distance % game.v.distanceForLevelUpdate) / game.v.distanceForLevelUpdate);
+  const d =
+    502 *
+    (1 -
+      (game.v.distance % game.v.distanceForLevelUpdate) /
+        game.v.distanceForLevelUpdate);
   levelCircleElm.setAttribute('stroke-dashoffset', d);
 }
-
 
 function showReplay() {
   replayMessageElm.style.display = 'block';
@@ -230,43 +265,53 @@ function loop() {
 
   if (game.v.status === 'playing') {
     // Add energy coins every 100m;
-    if (Math.floor(game.v.distance) % game.v.distanceForCoinsSpawn === 0
-      && Math.floor(game.v.distance) > game.v.coinLastSpawn) {
+    if (
+      Math.floor(game.v.distance) % game.v.distanceForCoinsSpawn === 0 &&
+      Math.floor(game.v.distance) > game.v.coinLastSpawn
+    ) {
       game.v.coinLastSpawn = Math.floor(game.v.distance);
       coinsHolder.spawnCoins();
     }
 
-    if (Math.floor(game.v.distance) % game.v.distanceForSpeedUpdate === 0
-      && Math.floor(game.v.distance) > game.v.speedLastUpdate) {
+    if (
+      Math.floor(game.v.distance) % game.v.distanceForSpeedUpdate === 0 &&
+      Math.floor(game.v.distance) > game.v.speedLastUpdate
+    ) {
       game.v.speedLastUpdate = Math.floor(game.v.distance);
       game.v.targetBaseSpeed += game.v.incrementSpeedByTime * game.deltaTime;
     }
 
-    if (Math.floor(game.v.distance) % game.v.distanceForEnnemiesSpawn === 0
-      && Math.floor(game.v.distance) > game.v.ennemyLastSpawn) {
+    if (
+      Math.floor(game.v.distance) % game.v.distanceForEnnemiesSpawn === 0 &&
+      Math.floor(game.v.distance) > game.v.ennemyLastSpawn
+    ) {
       game.v.ennemyLastSpawn = Math.floor(game.v.distance);
       ennemiesHolder.spawnEnnemies();
     }
 
-    if (Math.floor(game.v.distance) % game.v.distanceForLevelUpdate === 0
-      && Math.floor(game.v.distance) > game.v.levelLastUpdate) {
+    if (
+      Math.floor(game.v.distance) % game.v.distanceForLevelUpdate === 0 &&
+      Math.floor(game.v.distance) > game.v.levelLastUpdate
+    ) {
       game.v.levelLastUpdate = Math.floor(game.v.distance);
       game.v.level++;
       fieldLevelElm.innerHTML = Math.floor(game.v.level);
 
-      game.v.targetBaseSpeed = game.v.initSpeed + game.v.incrementSpeedByLevel * game.v.level;
+      game.v.targetBaseSpeed =
+        game.v.initSpeed + game.v.incrementSpeedByLevel * game.v.level;
     }
 
     updatePlane();
     updateDistance();
     updateEnergy();
 
-
-    game.v.baseSpeed += (game.v.targetBaseSpeed - game.v.baseSpeed) * game.deltaTime * 0.02;
+    game.v.baseSpeed +=
+      (game.v.targetBaseSpeed - game.v.baseSpeed) * game.deltaTime * 0.02;
     game.v.speed = game.v.baseSpeed * game.v.planeSpeed;
   } else if (game.v.status === 'gameover') {
-    game.v.speed *= .99;
-    airplane.mesh.rotation.z += ( -Math.PI / 2 - airplane.mesh.rotation.z) * .0002 * game.deltaTime;
+    game.v.speed *= 0.99;
+    airplane.mesh.rotation.z +=
+      (-Math.PI / 2 - airplane.mesh.rotation.z) * 0.0002 * game.deltaTime;
     airplane.mesh.rotation.x += 0.0003 * game.deltaTime;
     game.v.planeFallSpeed *= 1.05;
     airplane.mesh.position.y -= game.v.planeFallSpeed * game.deltaTime;
@@ -278,8 +323,8 @@ function loop() {
   } else if (game.v.status === 'waitingReplay') {
   }
 
-
-  airplane.propeller.rotation.x += 0.2 + game.v.planeSpeed * game.deltaTime * 0.005;
+  airplane.propeller.rotation.x +=
+    0.2 + game.v.planeSpeed * game.deltaTime * 0.005;
 
   sea.mesh.rotation.z += game.v.speed * game.deltaTime;
   if (sea.mesh.rotation.z > Math.PI * 2) {
@@ -289,7 +334,8 @@ function loop() {
     sea.mesh.rotation.z -= Math.PI * 2;
   }
 
-  ambientLight.intensity += (0.5 - ambientLight.intensity) * game.deltaTime * 0.005;
+  ambientLight.intensity +=
+    (0.5 - ambientLight.intensity) * game.deltaTime * 0.005;
 
   coinsHolder.rotateCoins();
   ennemiesHolder.rotateEnnemies();

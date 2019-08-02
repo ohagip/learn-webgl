@@ -31,8 +31,12 @@ class Sea {
         x: v.x,
         z: v.z,
         ang: Math.random() * Math.PI * 2,
-        amp: game.v.wavesMinAmp + Math.random() * (game.v.wavesMaxAmp - game.v.wavesMinAmp), // 距離
-        speed: game.v.wavesMinSpeed + Math.random() * (game.v.wavesMaxSpeed - game.v.wavesMinSpeed),
+        amp:
+          game.v.wavesMinAmp +
+          Math.random() * (game.v.wavesMaxAmp - game.v.wavesMinAmp), // 距離
+        speed:
+          game.v.wavesMinSpeed +
+          Math.random() * (game.v.wavesMaxSpeed - game.v.wavesMinSpeed),
       });
     }
 

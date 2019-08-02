@@ -26,7 +26,7 @@ class Sky {
   }
 
   moveClouds() {
-    for (let i = 0; i < this.nClouds; i ++) {
+    for (let i = 0; i < this.nClouds; i++) {
       const c = this.clouds[i];
       c.rotate();
     }
