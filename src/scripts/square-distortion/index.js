@@ -7,11 +7,10 @@ import fragmentShader from './shader.frag';
     isPlay: false, // エフェクト中
     index: 0, // スライド画像のインデックス
     progress: 0, // エフェクトの進捗
-    duration: 1.3, // エフェクトの時間
-    interval: 3, // 次のエフェクトまでの間隔
+    duration: 1.7, // エフェクトの時間
+    // interval: 3, // 次のエフェクトまでの間隔
     squareSize: 40, // 正方形のピクセルサイズ
-    distFactor: 0.1, // 歪ます量
-    offset: 1, // ノイズのオフセット
+    distFactor: 0.04, // 歪ます量
   };
 
   const pane = new Tweakpane();
@@ -30,11 +29,11 @@ import fragmentShader from './shader.frag';
     min: 0,
     max: 10,
   });
-  pane.addInput(status, 'interval', {
-    step: 0.1,
-    min: 0,
-    max: 10,
-  });
+  // pane.addInput(status, 'interval', {
+  //   step: 0.1,
+  //   min: 0,
+  //   max: 10,
+  // });
   pane
     .addInput(status, 'squareSize', {
       step: 10,
@@ -48,23 +47,12 @@ import fragmentShader from './shader.frag';
     .addInput(status, 'distFactor', {
       step: 0.01,
       min: 0,
-      max: 1,
+      max: 0.2,
     })
     .on('change', (value) => {
       material.uniforms.uDispFactor.value = value;
     });
-  pane
-    .addInput(status, 'offset', {
-      step: 1,
-      min: 1,
-      max: 100,
-    })
-    .on('change', (value) => {
-      material.uniforms.uOffset.value = value;
-    });
-  pane
-    .addButton({ title: 'start' })
-    .on('click', startEffect);
+  pane.addButton({ title: 'start' }).on('click', startEffect);
 
   // texture
   const texturePath = config.imagesPath + 'common/sample/';
@@ -146,19 +134,20 @@ import fragmentShader from './shader.frag';
 
     status.isPlay = true;
     const prevIndex = status.index;
-    const nextIndex = (prevIndex + 1 < textures.length) ? prevIndex + 1 : 0;
+    const nextIndex = prevIndex + 1 < textures.length ? prevIndex + 1 : 0;
 
     material.uniforms.uTexturePrev.value = textures[prevIndex].tex;
     material.uniforms.uTextureNext.value = textures[nextIndex].tex;
     status.progress = 0;
     material.uniforms.uProgress.value = 0;
+    material.uniforms.uOffset.value = Math.floor(Math.random() * 100);
 
     TweenMax.to(status, status.duration, {
       progress: 1,
       onUpdate: () => {
         pane.refresh();
       },
-      ease: Power2.easeOut,
+      ease: Power3.easeOut,
       onComplete: () => {
         status.isPlay = false;
         status.index = nextIndex;
