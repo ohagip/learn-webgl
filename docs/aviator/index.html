@@ -10,17 +10,26 @@
 
 <link rel="stylesheet" href="/learn-webgl/assets/css/app.css">
 </head>
-<body class="page-top">
+<body class="page-aviator u-of-h">
 <div class="l-wrap">
 <div class="l-main">
-
-<ul class="list">
-  <li><a href="./square-distortion/">square distortion</a></li>
-  <!--<li><a href="./aviator/">aviator</a></li>-->
-  <!--<li><a href="./taotajima/">taotajima</a></li>-->
-  <!--<li><a href="./dissolve/">dissolve</a></li>-->
-  <!--<li><a href="./animated-landscape/">animated-landscape</a></li>-->
-</ul>
+<style>
+  .world {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(#e4e0ba, #f7d9aa);
+  }
+</style>
+<div class="world">
+    <canvas id="canvas" class="c-canvas"></canvas>
+</div>
+<!--<div class="c-note">-->
+<!--<div class="c-note_body">-->
+<!--<a href="https://tympanus.net/codrops/2016/04/26/the-aviator-animating-basic-3d-scene-threejs/" target="_blank">参考サイト</a><br>-->
+<!--</div>-->
+<!--</div>-->
 
 </div><!-- ./l-main -->
 </div><!-- ./l-wrap -->
@@ -28,6 +37,6 @@
 <script src="/learn-webgl/assets/js/libs.js"></script>
 <script src="/learn-webgl/assets/js/common.js"></script>
 <script src="/learn-webgl/assets/js/app.js"></script>
-<script src="/learn-webgl/assets/js/top.js"></script>
+<script src="/learn-webgl/assets/js/aviator/index.js"></script>
 </body>
 </html>
