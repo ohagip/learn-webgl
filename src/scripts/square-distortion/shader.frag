@@ -30,37 +30,37 @@ void main() {
   vec2 nextUv = vec2(1.0);
 
   // ← to →
-  //  prevUv = vec2(vUv.x - uProgress * (disp * uDispFactor), vUv.y);
-  //  nextUv = vec2(vUv.x + (1.0 - uProgress) * (disp * uDispFactor), vUv.y);
+  //  prevUv = vec2(vTexUv.x - uProgress * (disp * uDispFactor), vTexUv.y);
+  //  nextUv = vec2(vTexUv.x + (1.0 - uProgress) * (disp * uDispFactor), vTexUv.y);
 
   // → to ←
-  //  prevUv = vec2(vUv.x + uProgress * (disp * uDispFactor), vUv.y);
-  //  nextUv = vec2(vUv.x - (1.0 - uProgress) * (disp * uDispFactor), vUv.y);
+  //  prevUv = vec2(vTexUv.x + uProgress * (disp * uDispFactor), vTexUv.y);
+  //  nextUv = vec2(vTexUv.x - (1.0 - uProgress) * (disp * uDispFactor), vTexUv.y);
 
   // ↓ to ↑
-  //  prevUv = vec2(vUv.x, vUv.y - uProgress * (disp * uDispFactor));
-  //  nextUv = vec2(vUv.x, vUv.y + (1.0 - uProgress) * (disp * uDispFactor));
+  //  prevUv = vec2(vTexUv.x, vTexUv.y - uProgress * (disp * uDispFactor));
+  //  nextUv = vec2(vTexUv.x, vTexUv.y + (1.0 - uProgress) * (disp * uDispFactor));
 
   // ↑ to ↓
-  //  nextUv = vec2(vUv.x, vUv.y - (1.0 - uProgress) * (disp * uDispFactor));
-  //  prevUv = vec2(vUv.x, vUv.y + uProgress * (disp * uDispFactor));
+  //  nextUv = vec2(vTexUv.x, vTexUv.y - (1.0 - uProgress) * (disp * uDispFactor));
+  //  prevUv = vec2(vTexUv.x, vTexUv.y + uProgress * (disp * uDispFactor));
 
-  if (disp2 < 0.2) {
+  if (disp2 < 0.05) {
     // ↓ to ↑
-    prevUv = vec2(vUv.x, vUv.y - uProgress * (disp * uDispFactor));
-    nextUv = vec2(vUv.x, vUv.y + (1.0 - uProgress) * (disp * uDispFactor));
-  } else if (disp2 < 0.3) {
-    // → to ←
-    prevUv = vec2(vUv.x + uProgress * (disp * uDispFactor), vUv.y);
-    nextUv = vec2(vUv.x - (1.0 - uProgress) * (disp * uDispFactor), vUv.y);
-  } else if (disp2 < 0.4) {
+    prevUv = vec2(vTexUv.x, vTexUv.y - uProgress * (disp * uDispFactor));
+    nextUv = vec2(vTexUv.x, vTexUv.y + (1.0 - uProgress) * (disp * uDispFactor));
+  } else if (disp2 < 0.1) {
     // ← to →
-    prevUv = vec2(vUv.x - uProgress * (disp * uDispFactor), vUv.y);
-    nextUv = vec2(vUv.x + (1.0 - uProgress) * (disp * uDispFactor), vUv.y);
+    prevUv = vec2(vTexUv.x - uProgress * (disp * uDispFactor), vTexUv.y);
+    nextUv = vec2(vTexUv.x + (1.0 - uProgress) * (disp * uDispFactor), vTexUv.y);
+  } else if (disp2 < 0.65) {
+    // → to ←
+    prevUv = vec2(vTexUv.x + uProgress * (disp * uDispFactor), vTexUv.y);
+    nextUv = vec2(vTexUv.x - (1.0 - uProgress) * (disp * uDispFactor), vTexUv.y);
   } else {
     // ↑ to ↓
-    nextUv = vec2(vUv.x, vUv.y - (1.0 - uProgress) * (disp * uDispFactor));
-    prevUv = vec2(vUv.x, vUv.y + uProgress * (disp * uDispFactor));
+    nextUv = vec2(vTexUv.x, vTexUv.y - (1.0 - uProgress) * (disp * uDispFactor));
+    prevUv = vec2(vTexUv.x, vTexUv.y + uProgress * (disp * uDispFactor));
   }
 
   vec4 prevColor = texture2D(uTexturePrev, prevUv);

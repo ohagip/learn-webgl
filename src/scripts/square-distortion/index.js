@@ -9,8 +9,8 @@ import fragmentShader from './shader.frag';
     progress: 0, // エフェクトの進捗
     duration: 1.7, // エフェクトの時間
     // interval: 3, // 次のエフェクトまでの間隔
-    squareSize: 40, // 正方形のピクセルサイズ
-    distFactor: 0.04, // 歪ます量
+    squareSize: 2, // 正方形のピクセルサイズ
+    distFactor: 0.03, // 歪ます量
   };
 
   const pane = new Tweakpane();
@@ -36,9 +36,9 @@ import fragmentShader from './shader.frag';
   // });
   pane
     .addInput(status, 'squareSize', {
-      step: 10,
+      step: 1,
       min: 1,
-      max: 100,
+      max: 50,
     })
     .on('change', (value) => {
       material.uniforms.uSquareSize.value = value;
