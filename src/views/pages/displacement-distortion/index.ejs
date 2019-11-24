@@ -1,0 +1,19 @@
+<%- include('../../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'displacement-distortion';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = ['u-of-h'];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '/index.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../../parts/_head'); %>
+
+<canvas id="canvas" class="c-canvas"></canvas>
+
+<%- include('../../parts/_foot'); %>
