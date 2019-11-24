@@ -8,11 +8,11 @@ import fragmentShader from './shader.frag';
   const controller = {};
   const guiParams = {
     step: 0,
-    duration: 3,
-    noiseX: 5,
-    noiseY: 5,
+    duration: 2.8,
+    noiseX: 8,
+    noiseY: 8,
     noiseZ: 1,
-    edgeWidth: 0.05,
+    edgeWidth: 0.04,
     animation: true,
   };
 
