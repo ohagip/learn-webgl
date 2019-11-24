@@ -7,10 +7,10 @@ import fragmentShader from './shader.frag';
     isPlay: false, // エフェクト中
     index: 0, // スライド画像のインデックス
     progress: 0, // エフェクトの進捗
-    duration: 1.7, // エフェクトの時間
+    duration: 1.6, // エフェクトの時間
     // interval: 3, // 次のエフェクトまでの間隔
-    squareSize: 2, // 正方形のピクセルサイズ
-    distFactor: 0.03, // 歪ます量
+    squareSize: 40, // 正方形のピクセルサイズ
+    distFactor: 0.08, // 歪ます量
   };
 
   const pane = new Tweakpane();
