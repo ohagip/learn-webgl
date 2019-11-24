@@ -31,15 +31,29 @@ import fragmentShader from './shader.frag';
     .addInput(status, 'displacement', {
       label: 'disp',
       options: {
-        '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8,
-        '9': 9, '10': 10, '11': 11, '12': 12, '13': 13, '14': 14, '15': 15,
+        '0': 0,
+        '1': 1,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        '10': 10,
+        '11': 11,
+        '12': 12,
+        '13': 13,
+        '14': 14,
+        '15': 15,
       },
     })
     .on('change', (value) => {
-      material.uniforms.uDisplacementTexture.value = displacementImages[value].tex;
+      material.uniforms.uDisplacementTexture.value =
+        displacementImages[value].tex;
     });
   pane.addButton({ title: 'start' }).on('click', startEffect);
-
 
   const loaderPromises = [];
 
@@ -97,7 +111,7 @@ import fragmentShader from './shader.frag';
         displacementLoader.load(
           displacementPath + entry.fileName,
           (texture) => {
-            console.log(texture)
+            console.log(texture);
             texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(4, 4);
@@ -190,7 +204,8 @@ import fragmentShader from './shader.frag';
     () => {
       material.uniforms.uTexturePrev.value = textures[0].tex;
       material.uniforms.uTextureNext.value = textures[1].tex;
-      material.uniforms.uDisplacementTexture.value = displacementImages[status.displacement].tex;
+      material.uniforms.uDisplacementTexture.value =
+        displacementImages[status.displacement].tex;
       render();
     },
     (err) => {
