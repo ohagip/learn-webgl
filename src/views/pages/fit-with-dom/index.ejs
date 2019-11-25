@@ -1,0 +1,23 @@
+<%- include('../../_config') _%>
+<%
+// ページ個別設定
+page = {};
+page.id = 'fit-with-dom';
+
+page.title = '';
+page.description = '';
+
+page.bodyClass = [];
+page.styles = [];
+page.scripts = [(JS_PATH + page.id + '/index.js')];
+page.imagesPath =  IMAGES_PATH + page.id + '/';
+_%>
+<%- include('../../parts/_head'); %>
+<canvas id="canvas"></canvas>
+<div class="body">
+  <div class="img img-1"><div class="img_in"></div></div>
+  <div class="img img-2"><div class="img_in"></div></div>
+  <div class="img img-3"><div class="img_in"></div></div>
+</div>
+
+<%- include('../../parts/_foot'); %>
