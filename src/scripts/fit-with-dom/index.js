@@ -74,7 +74,10 @@ import fragmentShader from './shader.frag';
       const geometry = new THREE.PlaneGeometry(rect.width, rect.height, 1, 1);
       const material = new THREE.ShaderMaterial({
         uniforms: {
-          uResolution: { type: 'v2', value: new THREE.Vector2(rect.width, rect.height) },
+          uResolution: {
+            type: 'v2',
+            value: new THREE.Vector2(rect.width, rect.height),
+          },
           uTexResolution: { type: 'v2', value: textureResolution },
           uTexture: { type: 't', value: undefined },
           uProgress: { type: 'f', value: 0 },
@@ -155,17 +158,20 @@ import fragmentShader from './shader.frag';
   }
 
   function initIntersect() {
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting === true) {
-          console.log(entry);
-          showImg(entry.target);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: [1.0],
-    });
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting === true) {
+            console.log(entry);
+            showImg(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: [1.0],
+      }
+    );
 
     imgList.forEach((item) => {
       observer.observe(item.elm);
@@ -180,7 +186,7 @@ import fragmentShader from './shader.frag';
   Promise.all(loaderPromises).then(
     () => {
       imgList.forEach((item, idx) => {
-        console.log(item.material.uniforms.uTexture, textures[idx].tex)
+        console.log(item.material.uniforms.uTexture, textures[idx].tex);
         item.material.uniforms.uTexture.value = textures[idx].tex;
       });
       initIntersect();
