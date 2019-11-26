@@ -10,24 +10,24 @@
     width: 100%;
     height: 100%;
   }
-  
+
   .body {
     position: relative;
     z-index: 10;
     padding: 100vh 0 50vh;
   }
-  
+
   .img {
     margin: 0 auto;
     width: 36%;
-    background: rgba(255,0,0,0.3);
+    //background: rgba(255,0,0,0.3);
   }
   .img + .img { margin-top:  16%; }
-  
+
   .img-1 { margin-left: 16%; }
   .img-2 { margin-right: 16%; }
   .img-3 { margin-left: 16%; }
-  
+
   .img_in {
     width: 100%;
     padding-top: percentage(3 / 4);

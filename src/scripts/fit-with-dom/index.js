@@ -4,6 +4,8 @@ import fragmentShader from './shader.frag';
 
 (() => {
   const loaderPromises = [];
+  const imgList = []; // { elm, material }
+  const textureResolution = new THREE.Vector2(2048, 1536);
 
   // texture
   const texturePath = config.imagesPath + 'common/sample/';
@@ -42,7 +44,7 @@ import fragmentShader from './shader.frag';
   const aspect = window.innerWidth / window.innerHeight;
   const camera = new THREE.PerspectiveCamera(fov, aspect, 1, 2000);
   camera.position.y = -scrollY;
-  console.log(scrollY, camera)
+  console.log(scrollY, camera);
 
   // renderer
   const renderer = new THREE.WebGLRenderer({
@@ -61,11 +63,23 @@ import fragmentShader from './shader.frag';
 
     $('.img_in').each((idx, elm) => {
       const rect = elm.getBoundingClientRect();
-      const center = new THREE.Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-      const diff = new THREE.Vector2(center.x - width / 2, center.y - height / 2);
+      const center = new THREE.Vector2(
+        rect.x + rect.width / 2,
+        rect.y + rect.height / 2
+      );
+      const diff = new THREE.Vector2(
+        center.x - width / 2,
+        center.y - height / 2
+      );
       const geometry = new THREE.PlaneGeometry(rect.width, rect.height, 1, 1);
       const material = new THREE.ShaderMaterial({
-        uniforms: {},
+        uniforms: {
+          uResolution: { type: 'v2', value: new THREE.Vector2(rect.width, rect.height) },
+          uTexResolution: { type: 'v2', value: textureResolution },
+          uTexture: { type: 't', value: undefined },
+          uProgress: { type: 'f', value: 0 },
+          uOffset: { type: 'f', value: Math.floor(Math.random() * 100) },
+        },
         vertexShader: vertexShader,
         fragmentShader: fragmentShader,
       });
@@ -73,6 +87,8 @@ import fragmentShader from './shader.frag';
       mesh.position.set(diff.x, -diff.y - scrollY, 0);
       scene.add(mesh);
       meshList.push(mesh);
+
+      imgList.push({ elm, material });
     });
   }
 
@@ -82,8 +98,14 @@ import fragmentShader from './shader.frag';
 
     $('.img_in').each((idx, elm) => {
       const rect = elm.getBoundingClientRect();
-      const center = new THREE.Vector2(rect.x + rect.width / 2, rect.y + rect.height / 2);
-      const diff = new THREE.Vector2(center.x - width / 2, center.y - height / 2);
+      const center = new THREE.Vector2(
+        rect.x + rect.width / 2,
+        rect.y + rect.height / 2
+      );
+      const diff = new THREE.Vector2(
+        center.x - width / 2,
+        center.y - height / 2
+      );
       const geometry = new THREE.PlaneGeometry(rect.width, rect.height, 1, 1);
       const mesh = meshList[idx];
       mesh.geometry.dispose();
@@ -101,7 +123,7 @@ import fragmentShader from './shader.frag';
   function resize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const dist = (height / 2) / Math.tan(fovRad); // ウィンドウぴったりのカメラ距離
+    const dist = height / 2 / Math.tan(fovRad); // ウィンドウぴったりのカメラ距離
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(width, height);
     camera.position.z = dist;
@@ -115,6 +137,41 @@ import fragmentShader from './shader.frag';
     scrollY = window.scrollY;
   }
 
+  function showImg(target) {
+    let imgIdx = null;
+    imgList.findIndex((item, idx) => {
+      if (item.elm === target) {
+        imgIdx = idx;
+      }
+    });
+
+    if (imgIdx !== -1) {
+      const progress = imgList[imgIdx].material.uniforms.uProgress;
+      TweenMax.to(progress, 1.8, {
+        value: 1,
+        ease: Power3.easeOut,
+      });
+    }
+  }
+
+  function initIntersect() {
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting === true) {
+          console.log(entry);
+          showImg(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: [1.0],
+    });
+
+    imgList.forEach((item) => {
+      observer.observe(item.elm);
+    });
+  }
+
   createMesh();
   window.addEventListener('resize', resize);
   window.addEventListener('scroll', scroll);
@@ -122,6 +179,11 @@ import fragmentShader from './shader.frag';
 
   Promise.all(loaderPromises).then(
     () => {
+      imgList.forEach((item, idx) => {
+        console.log(item.material.uniforms.uTexture, textures[idx].tex)
+        item.material.uniforms.uTexture.value = textures[idx].tex;
+      });
+      initIntersect();
       render();
     },
     (err) => {
